@@ -28,13 +28,13 @@ public class CanoeMainDemo {
 
                     rM.getReservationInfo();
 
-
-
-//
-//                    rM.printFlights();
-//                    rM.printHotels();
                     break;
+
                 case "2":
+
+                    rM.printFlights();
+
+                    rM.printHotels();
 
                     break;
                 case "3":

@@ -6,14 +6,19 @@ import java.time.format.DateTimeFormatter;
 
 
 public class ReservationManager {
+
     private ArrayList<Flight> flights = new ArrayList<>();
     private ArrayList<Hotel> hotels = new ArrayList<>();
+
+
+    private ArrayList<Hotel> tempHotels; //= new ArrayList<>();
+    private ArrayList<Flight> tempFlights; //= new ArrayList<>();
 
 
     public void addFlights () {
         flights.add(new Flight("Delta", "Economy", "de123", 500,
                 "Scranton, PA"));
-        flights.add(new Flight("Detla", "Business", "de123", 800,
+        flights.add(new Flight("Detla", "Business", "de133", 800,
                 "Scranton, PA"));
         flights.add(new Flight("United", "Economy", "ua580", 300,
                 "Tulsa, OK"));
@@ -49,10 +54,12 @@ public class ReservationManager {
     }
 
     public void getReservationInfo(){
-        ArrayList<Flight> tempFlights = new ArrayList<>();
-        ArrayList<Hotel> tempHotels = new ArrayList<>();
 
         Scanner scan = new Scanner(System.in);
+
+        tempHotels = new ArrayList<>();
+        tempFlights = new ArrayList<>();
+
         System.out.println("When are you going on your trip? mm/dd/yyyy");
         String firstDate = scan.nextLine();
         System.out.println("When are do you want to come back? mm/dd/yyyy");
@@ -60,29 +67,43 @@ public class ReservationManager {
         System.out.println("What is your budget?");
         double budget = scan.nextDouble();
 
-        for(int i = 0; i < flights.size(); i++){
 
-            if(flights.get(i).getPrice() < budget){
 
-                System.out.println("[" + i + "]");
-                flights.get(i).printDetails();
-                tempFlights.add(flights.get(i));
+            for (int i = 0; i < flights.size(); i++) {
 
+                if (flights.get(i).getPrice() < budget &&
+                        flights.get(i).getStatus().equalsIgnoreCase("available")) {
+
+                    tempFlights.add(flights.get(i));
+
+
+                }
 
             }
+        for(int i = 0; i <tempFlights.size(); i++){
+
+            System.out.println("[" + i + "]");
+
+            tempFlights.get(i).printDetails();
 
         }
 
+
         System.out.println("What is the flight you want to select?");
 
-        int userChoice = scan.nextInt();
+            int userChoice = scan.nextInt();
 
-       budget -= tempFlights.get(userChoice).getPrice();
+            budget -= tempFlights.get(userChoice).getPrice();
 
-        //modify budget to subtract the flight onces they pick
-        //they pick a flight and then got into the hotel for loop
-        //a variable for the amount of days in between
-        //evaluate the amount of days.
+
+        for(int i = 0; i < flights.size(); i++){
+
+            if(tempFlights.get(userChoice).getFlightNumber().equalsIgnoreCase(flights.get(i).getFlightNumber())){
+
+               flights.get(i).setStatus("Booked");
+            }
+
+        }
 
 
         System.out.println("Here is your new budget" + budget + "\n");
@@ -93,18 +114,26 @@ public class ReservationManager {
         for(int i = 0; i < hotels.size(); i++){
 
             if((daysOnTrip * hotels.get(i).getPrice()) < budget &&
-                    tempFlights.get(userChoice).getLocation() == hotels.get(i).getLocation()){
 
+                    tempFlights.get(userChoice).getLocation() == hotels.get(i).getLocation()
 
-                System.out.println("[" + i + "]");
-
-                hotels.get(i).printDetails();
+                    && hotels.get(i).getStatus().equalsIgnoreCase("available")){
 
                 tempHotels.add(hotels.get(i));
 
             }
 
         }
+
+        for(int i = 0; i <tempHotels.size(); i++){
+
+            System.out.println("[" + i + "]");
+
+            tempHotels.get(i).printDetails();
+
+        }
+
+
 
         if(tempHotels.size() == 0){
             System.out.println( "Not enough money left. ");
@@ -116,13 +145,27 @@ public class ReservationManager {
 
             budget -= tempHotels.get(userHotelChoice).getPrice();
 
+           for(int i = 0; i < hotels.size(); i++){
+
+               if(tempHotels.get(userHotelChoice).getNameOfHotel().equalsIgnoreCase(hotels.get(i).getNameOfHotel())){
+
+                   hotels.get(i).setStatus("Booked");
+               }
+
+           }
+
+
             System.out.println("Here is your trip info.");
-            System.out.println("FLIGHT INFO-");
+
+            System.out.println("-------FLIGHT INFO-------");
+
             tempFlights.get(userChoice).printDetails();
-            System.out.println("HOTEL INFO-");
+
+            System.out.println("-------HOTEL INFO-------");
+
             tempHotels.get(userHotelChoice).printDetails();
 
-            System.out.println("Your remaining budget is" + budget);
+            System.out.println("Your remaining budget is $" + budget);
 
         }
 
