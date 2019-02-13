@@ -14,6 +14,8 @@ public class ReservationManager {
     private ArrayList<Hotel> tempHotels; //= new ArrayList<>();
     private ArrayList<Flight> tempFlights; //= new ArrayList<>();
 
+    private Scanner scan = new Scanner(System.in);
+
 
     public void addFlights () {
         flights.add(new Flight("Delta", "Economy", "de123", 500,
@@ -53,6 +55,48 @@ public class ReservationManager {
         }
     }
 
+    public void showFlightsBasedOnBudget(double budget){
+        for (int i = 0; i < flights.size(); i++) {
+
+            if (flights.get(i).getPrice() < budget &&
+                    flights.get(i).getStatus().equalsIgnoreCase("available")) {
+
+                tempFlights.add(flights.get(i));
+
+
+            }
+
+        }
+        for(int i = 0; i <tempFlights.size(); i++){
+
+            System.out.println("[" + i + "]");
+
+            tempFlights.get(i).printDetails();
+
+        }
+
+
+
+    }
+
+    public double chooseFlight(double budget, int userChoice){
+
+
+        budget -= tempFlights.get(userChoice).getPrice();
+
+
+        for(int i = 0; i < flights.size(); i++){
+
+            if(tempFlights.get(userChoice).getFlightNumber().equalsIgnoreCase(flights.get(i).getFlightNumber())){
+
+                flights.get(i).setStatus("Booked");
+            }
+
+        }
+
+        return budget;
+    }
+
     public void getReservationInfo(){
 
         Scanner scan = new Scanner(System.in);
@@ -68,52 +112,26 @@ public class ReservationManager {
         double budget = scan.nextDouble();
 
 
-
-            for (int i = 0; i < flights.size(); i++) {
-
-                if (flights.get(i).getPrice() < budget &&
-                        flights.get(i).getStatus().equalsIgnoreCase("available")) {
-
-                    tempFlights.add(flights.get(i));
-
-
-                }
-
-            }
-        for(int i = 0; i <tempFlights.size(); i++){
-
-            System.out.println("[" + i + "]");
-
-            tempFlights.get(i).printDetails();
-
-        }
-
+        showFlightsBasedOnBudget(budget);
 
         System.out.println("What is the flight you want to select?");
 
-            int userChoice = scan.nextInt();
-
-            budget -= tempFlights.get(userChoice).getPrice();
+        int userChoice = scan.nextInt();
 
 
-        for(int i = 0; i < flights.size(); i++){
-
-            if(tempFlights.get(userChoice).getFlightNumber().equalsIgnoreCase(flights.get(i).getFlightNumber())){
-
-               flights.get(i).setStatus("Booked");
-            }
-
-        }
+        double newBudget = chooseFlight(budget, userChoice);
 
 
-        System.out.println("Here is your new budget" + budget + "\n");
+
+        System.out.println("Here is your new budget" + newBudget + "\n");
 
         int daysOnTrip = calculateDaysOnTrip(firstDate, secondDate);
 
 
+
         for(int i = 0; i < hotels.size(); i++){
 
-            if((daysOnTrip * hotels.get(i).getPrice()) < budget &&
+            if((daysOnTrip * hotels.get(i).getPrice()) < newBudget &&
 
                     tempFlights.get(userChoice).getLocation() == hotels.get(i).getLocation()
 
@@ -143,7 +161,7 @@ public class ReservationManager {
             System.out.println("What hotel would you like? ");
             int userHotelChoice = scan.nextInt();
 
-            budget -= tempHotels.get(userHotelChoice).getPrice();
+            newBudget -= (daysOnTrip * tempHotels.get(userHotelChoice).getPrice());
 
            for(int i = 0; i < hotels.size(); i++){
 
@@ -155,7 +173,9 @@ public class ReservationManager {
            }
 
 
-            System.out.println("Here is your trip info.");
+            System.out.println("Your are going to " + hotels.get(userChoice).getLocation()
+                    + " for " + daysOnTrip + " days.\n" +
+                    "Here is your trip info: \n");
 
             System.out.println("-------FLIGHT INFO-------");
 
@@ -165,7 +185,8 @@ public class ReservationManager {
 
             tempHotels.get(userHotelChoice).printDetails();
 
-            System.out.println("Your remaining budget is $" + budget);
+
+            System.out.println("Your remaining budget is $" + newBudget);
 
         }
 

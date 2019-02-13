@@ -19,7 +19,7 @@ public class CanoeMainDemo {
         do {
             System.out.println("Please select an option from below:");
             System.out.println("1) Book Trip\n" +
-                    "2) View Booked Trips\n" +
+                    "2) View All Trips\n" +
                     "3) Exit");
 
             String menuOption = scanner.nextLine();
