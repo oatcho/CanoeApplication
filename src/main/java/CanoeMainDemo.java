@@ -35,6 +35,7 @@ public class CanoeMainDemo {
 //                    rM.printHotels();
                     break;
                 case "2":
+
                     break;
                 case "3":
                     running = false;

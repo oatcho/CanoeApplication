@@ -26,7 +26,8 @@ public class Flight {
     }
 
     public void printDetails () {
-        System.out.println(airlineName + " " + flightClass + " " + price + " " + status + " " + location);
+        System.out.println("Airline:" + airlineName + "\nFlight Class: " + flightClass + "\nPrice: $ " + price
+                + "\nStatus:  " + status + "\nLocation: " + location + "\n\n");
     }
 
     public String getAirlineName() {

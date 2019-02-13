@@ -22,7 +22,8 @@ public class Hotel {
     }
 
     public void printDetails() {
-        System.out.println(nameOfHotel + " " + bedOptions + " " + price + " " + status + " " + location);
+        System.out.printf("Hotel name: " + nameOfHotel + "\nRoom type: " + bedOptions + "\nPrice: $"
+                + price + "\nStatus: " + status + "\nLocation: " + location + "\n\n");
     }
 
 
