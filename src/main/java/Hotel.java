@@ -13,6 +13,14 @@ public class Hotel {
         this.location = location;
     }
 
+    public Hotel (String nameOfHotel, String bedOptions, double price, String location) {
+        this.nameOfHotel = nameOfHotel;
+        this.bedOptions = bedOptions;
+        this.price = price;
+        this.status = "Available";
+        this.location = location;
+    }
+
     public void printDetails() {
         System.out.println(nameOfHotel + " " + bedOptions + " " + price + " " + status + " " + location);
     }

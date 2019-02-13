@@ -4,6 +4,10 @@ public class CanoeMainDemo {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        ReservationManager rM = new ReservationManager();
+        //populating flights and hotels
+        rM.addFlights();
+        rM.addHotels();
         boolean running = true;
 
         System.out.println( "    W E L C O M E   T O     ");
@@ -14,11 +18,15 @@ public class CanoeMainDemo {
 
         do {
             System.out.println("Please select an option from below:");
-            System.out.println("1) Book Trip\n 2) View Booked Trips\n 3) Exit");
+            System.out.println("1) Book Trip\n" +
+                    "2) View Booked Trips\n" +
+                    "3) Exit");
 
             String menuOption = scanner.nextLine();
             switch (menuOption) {
                 case "1":
+                    rM.printFlights();
+                    rM.printHotels();
                     break;
                 case "2":
                     break;

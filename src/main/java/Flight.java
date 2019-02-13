@@ -10,9 +10,19 @@ public class Flight {
     public Flight (String airlineName, String flightClass, String flightNumber, double price, String status, String location) {
         this.airlineName = airlineName;
         this.flightClass = flightClass;
+        this.flightNumber = flightNumber;
         this.price = price;
         this.status = status;
         this.location = location;
+    }
+
+    public Flight (String airlineName, String flightClass, String flightNumber, double price, String location) {
+        this.airlineName = airlineName;
+        this.flightClass = flightClass;
+        this.flightNumber = flightNumber;
+        this.price = price;
+        this.location = location;
+        this.status = "Available";
     }
 
     public void printDetails () {
