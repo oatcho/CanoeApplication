@@ -25,6 +25,18 @@ public class Hotel {
         System.out.println(nameOfHotel + " " + bedOptions + " " + price + " " + status + " " + location);
     }
 
+
+    @Override
+    public String toString() {
+        return "Hotel{" +
+                "nameOfHotel='" + nameOfHotel + '\'' +
+                ", bedOptions='" + bedOptions + '\'' +
+                ", price=" + price +
+                ", status='" + status + '\'' +
+                ", location='" + location + '\'' +
+                '}';
+    }
+
     public String getNameOfHotel() {
         return nameOfHotel;
     }

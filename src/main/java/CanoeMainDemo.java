@@ -25,8 +25,14 @@ public class CanoeMainDemo {
             String menuOption = scanner.nextLine();
             switch (menuOption) {
                 case "1":
-                    rM.printFlights();
-                    rM.printHotels();
+
+                    rM.getReservationInfo();
+
+
+
+//
+//                    rM.printFlights();
+//                    rM.printHotels();
                     break;
                 case "2":
                     break;
